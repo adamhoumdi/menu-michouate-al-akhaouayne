@@ -6,25 +6,30 @@
 
 body {
     margin: 0;
-    min-width: 800px; 
+    padding: 20px 0; /* Réduit pour éviter les scrollbars inutiles */
     font-family: 'Poppins', sans-serif;
-	background: #D6D6D6;
-    background-size: cover;
+    background: #D6D6D6;
     display: flex;
     justify-content: center;
-    padding: 40px 0;
+    align-items: flex-start;
 }
 
 .menu-card {
     background: url('images/background.png') center fixed;
-    width: 800px;
-    padding: 50px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    background-size: cover;
+    /* STRUCTURE RÉPONSIVE */
+    width: 95%;           /* Évite le rognage sur les côtés sur mobile */
+    max-width: 1000px;    /* Largeur maximale sur ordinateur */
+    margin: 0 auto;
+    padding: 50px;        /* Espace intérieur généreux */
+    box-sizing: border-box; /* IMPORTANT : inclut le padding dans la largeur */
+    
     position: relative;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
     border-radius: 2px;
-    box-sizing: border-box; 
 }
 
+/* Bordure dorée intérieure */
 .menu-card::before {
     content: '';
     position: absolute;
@@ -37,8 +42,11 @@ body {
     text-align: center;
     margin-bottom: 20px;
 }
-
-.logo img { max-width: 210px; }
+.logo img { 
+    max-width: 250px; /* Légèrement agrandi pour le menu large */
+    width: 100%;
+    height: auto;
+}
 
 .header-title {
     text-align: center;
@@ -61,6 +69,7 @@ h1 {
     margin-top: 5px;
 }
 
+/* SECTIONS */
 .section { margin-bottom: 40px; }
 
 .section-header {
@@ -71,7 +80,8 @@ h1 {
 }
 
 .section-header img {
-    width: 70px; height: 70px;
+    width: 70px; 
+    height: 70px;
     border-radius: 50%;
     border: 2px solid var(--gold);
     object-fit: cover;
@@ -85,42 +95,44 @@ h1 {
     border-bottom: 2px solid var(--gold);
 }
 
-.title-wrapper .en { font-weight: 600; font-size: 20px; color: var(--dark); }
-.title-wrapper .ar { font-family: 'Amiri', serif; font-size: 24px; color: var(--gold); }
+.title-wrapper .en { font-weight: 600; font-size: 16px; color: var(--dark); }
+.title-wrapper .ar { font-family: 'Amiri', serif; font-size: 26px; color: var(--gold); }
 
-.item {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 12px;
-    font-size: 17px;
-}
-
-.dots {
-    flex-grow: 1;
-    border-bottom: 1px dotted #ccc;
-    margin: 0 10px;
-    position: relative;
-    top: -5px;
-}
-
-.price { font-weight: 600; color: var(--dark); }
-
+/* TABLEAUX DE PRIX */
 .table-tajine {
     width: 100%;
     border-collapse: collapse;
-    justify-content: space-between;
 }
 
 .table-tajine th {
-    text-align: left;
     color: var(--gold);
-    font-size: 12px;
+    font-size: 13px;
     padding-bottom: 10px;
+    text-transform: uppercase;
 }
 
 .table-tajine td {
-    padding: 8px 0;
+    padding: 10px 0;
     border-bottom: 1px solid #f0f0f0;
+    font-size: 16px;
+}
+
+/* Alignement des noms de plats */
+.table-tajine td:first-child,
+.table-tajine th:first-child {
+    text-align: left;
+    width: auto; 
+}
+
+/* Alignement strict des prix à droite */
+.table-tajine td.price,
+.table-tajine th:not(:first-child) {
+    width: 90px;         /* Largeur fixe pour éviter le chevauchement */
+    text-align: right;
+    white-space: nowrap;
+    padding-left: 15px;
+    font-weight: 600;
+    color: var(--dark);
 }
 
 .footer {
@@ -130,19 +142,52 @@ h1 {
     color: #888;
 }
 
-.table-tajine th,
+/* AJUSTEMENTS POUR MOBILE (Écrans de moins de 600px) */
+@media (max-width: 600px) {
+    .menu-card {
+        padding: 30px 20px; /* On réduit l'espace interne sur mobile */
+    }
+    
+    h1 { font-size: 28px; }
+    
+    .section-header img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .title-wrapper .en { font-size: 15px; }
+    .title-wrapper .ar { font-size: 20px; }
+
+    .table-tajine td { font-size: 14px; }
+    
+    .table-tajine td.price,
+    .table-tajine th:not(:first-child) {
+        width: 70px; /* Un peu plus étroit sur mobile */
+        padding-left: 8px;
+    }
+}
+
+/* Style des noms de produits empilés */
+.item-name-fr {
+    display: block;
+    font-weight: 600;
+    font-size: 15px; /* Ajustez selon vos besoins */
+    color: var(--dark);
+    line-height: 1.2;
+}
+
+.item-name-ar {
+    display: block;
+    font-family: 'Amiri', serif;
+    font-size: 18px;
+    color: var(--gold);
+    line-height: 1.2;
+    margin-top: 2px;
+}
+
+/* Alignement vertical des prix au milieu des deux lignes */
 .table-tajine td {
-    vertical-align: middle;
-}
-
-.table-tajine td:first-child,
-.table-tajine th:first-child {
-    width: 60%;
-}
-
-.table-tajine td.price,
-.table-tajine th:not(:first-child) {
-    width: 20%;
-    text-align: right;
-    white-space: nowrap;
+    padding: 10px 0;
+    vertical-align: middle; /* Aligne le prix face au milieu du bloc FR/AR */
+    border-bottom: 1px solid #f0f0f0;
 }
